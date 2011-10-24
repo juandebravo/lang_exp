@@ -14,7 +14,7 @@
         	<%= link_to "Sign out", destroy_user_session_path,  :method=>'delete' %>
         </div>
         <div class='float_box_right red_link'>
-        	Welcome  <%= link_to current_user.username, edit_user_registration_path(current_user) %>
+        	Welcome  <%= link_to current_user.username, user_path(current_user.username) %>
         </div>
   		<% end %>
   	</div>

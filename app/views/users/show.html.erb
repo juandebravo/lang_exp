@@ -6,11 +6,6 @@
 </p>
 
 <p>
-  <b>Password:</b>
-  <%= @user.password %>
-</p>
-
-<p>
   <b>Profile:</b>
   <ul>
     <li><%= "Name : #{@user.profile.name}"%></li>
@@ -22,11 +17,18 @@
   <b>Friends:</b>
   <ul>
   <% @user.friends.each do |friend| %>
-    <li> <%="#{friend.username}"%>
+    <li> <%= link_to friend.username, user_path("#{friend.username}") %>
   <%end%>
   </ul>
 </p>
 
+<%if user_signed_in?%>
+  <%if current_user.username.eql?(params[:id])%>
+    <%= link_to 'Edit', edit_user_path(current_user.username) %> |
+  <%else%>
+    <%= friend_link current_user, @user%>
+  <%end%>
+<%end%>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Home', root_path %>
+<%= link_to 'Wall', user_wall_index_path(@user.username)%>

@@ -34,7 +34,12 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id])
+    u = User.where({:username => params[:id]})
+    unless u.empty?
+      @user = u.first
+    else
+      redirect_to("/home/index", :notice => 'User not found') and return
+    end
   end
 
   # POST /users
@@ -90,7 +95,8 @@ class UsersController < ApplicationController
     friend = friend.first
     current_user.friends << friend
 
-    LangExp::Service.create_feed(current_user, {:title => 'New friend', :description => "User #{current_user.username} has added #{friend.username} as friend"})
+    LangExp::Service.create_feed(current_user, {:title => 'New friend', 
+        :description => "User #{create_link(current_user)} has added #{create_link(friend)} as friend"})
 
     redirect_to user_path(current_user.username)
   end
@@ -110,8 +116,13 @@ class UsersController < ApplicationController
     current_user.save
     logger.debug "After deleting user has #{current_user.friend_ids.length}"
 
-    LangExp::Service.create_feed(current_user, {:title => 'Deleted friend', :description => "User #{current_user.username} does not follow #{friend.username} anymore"})
+    LangExp::Service.create_feed(current_user, {:title => 'Deleted friend', 
+        :description => "User #{create_link(current_user)} does not follow #{create_link(friend)} anymore"})
     
     redirect_to user_path(current_user.username)
+  end
+
+  def create_link user
+   "<a href='#{user_path(user.username)}'>#{user.username}</a>"
   end
 end

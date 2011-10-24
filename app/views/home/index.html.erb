@@ -14,7 +14,7 @@
 <h1>Welcome <%=current_user.username%></h1>
 <ul>
 <% current_user.wall.feeds.each do |feed| %>
-<li><%= feed.title %> - <%= feed.description %></li>
+<li><%= feed.title %> - <%= raw(feed.description) %></li>
 <% end %>
 </ul>
 <% end %>
