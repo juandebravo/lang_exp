@@ -1,6 +1,7 @@
 class Feed
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Commentable
 
   field :title, :type => String
   field :description, :type => String

@@ -1,9 +1,53 @@
-body { background-color: #fff; color: #333; }
+#header{
+  background-color: #13A;
+  color :white;
+  min-height: 70px;
+}
 
-body, p, ol, ul, td {
+#header a, a:visited, a:hover { color: #DDD; }
+
+#title {
+  float: left;
+}
+
+#container{
+  width: 950px;
+  margin: 0 auto;
+  background-color: #FFF;
+}
+
+#content{
+  background-color: #FFF;
+  margin: 0 30px
+}
+
+#header h1{
+  padding: 23px;
+}
+.signed_in_box {
+  float: right;
+  padding: 10px;
+}
+
+.comments {
+  background-color: #FAF8CC;
+  padding-left: 70px;
+  font-size: 80%;
+  overflow: hidden;
+}
+
+.entry_feed {
+  padding: 10px;
+}
+body { 
+  background-color: #fff; color: #333; 
+}
+
+body{
   font-family: verdana, arial, helvetica, sans-serif;
   font-size:   13px;
   line-height: 18px;
+  background-color: #DDD;
 }
 
 pre {
@@ -12,9 +56,8 @@ pre {
   font-size: 11px;
 }
 
-a { color: #000; }
-a:visited { color: #666; }
-a:hover { color: #fff; background-color:#000; }
+a, a:visited, a:hover { color: #AAA; text-decoration: none}
+a:hover { text-decoration: underline }
 
 div.field, div.actions {
   margin-bottom: 10px;
@@ -22,6 +65,7 @@ div.field, div.actions {
 
 #notice {
   color: green;
+  clear: both;
 }
 
 .field_with_errors {
@@ -53,4 +97,31 @@ div.field, div.actions {
 #error_explanation ul li {
   font-size: 12px;
   list-style: square;
+}
+
+ul{
+  list-style: none;
+  padding: 0px;
+}
+
+li{
+  margin: 0 0 0 10px;
+}
+
+li.odd{
+  background-color: #DDD;
+  margin: 10px 0;
+  border: 1px dotted gray;
+}
+
+li.even{
+  background-color: #EEE;
+  margin: 10px 0;
+  border: 1px dotted gray;
+}
+
+#footer{
+  margin-top: 20px;
+  text-align: center;
+  padding-bottom: 20px;
 }

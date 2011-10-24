@@ -5,13 +5,11 @@ gem 'rails', '3.0.10'
 gem 'mongoid',  '~> 2.1.7'
 gem 'bson_ext', '~> 1.3'
 gem 'devise', '1.4.7'
+gem 'mongoid_commentable'
 
-#gem 'cancan'
 gem 'jquery-rails', '>= 1.0.12'
-#gem 'passenger'
-#gem 'capistrano'
+
 gem "compass", ">= 0.10.6"
-#gem 'haml'
 
 group :development, :test do
   #gem 'capybara'

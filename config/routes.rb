@@ -1,7 +1,11 @@
 LangExp::Application.routes.draw do
   resources :walls
 
-  resources :feeds
+  resources :feeds do
+    member do
+      post 'comment'
+    end
+  end
 
   get "home/index"
 

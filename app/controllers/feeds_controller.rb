@@ -80,4 +80,11 @@ class FeedsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def comment
+    comment = Comment.new({:author => current_user.username, :text => params[:feed][:text]})
+    feed = Feed.where({:_id => params[:id]}).first
+    feed.comments << comment
+    redirect_to(user_wall_index_path(params[:feed][:wall]))
+  end
 end

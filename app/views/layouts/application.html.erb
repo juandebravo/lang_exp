@@ -7,19 +7,27 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-  <div id="header">
-  	<div id="login">
+  <div id="container">
+    <div id="header">
+      <div id="title">
+        <h1>Language Experiment</h1>
+      </div>
   		<% if user_signed_in? %>
-  			<div>
+  			<div class="signed_in_box">
         	<%= link_to "Sign out", destroy_user_session_path,  :method=>'delete' %>
         </div>
-        <div class='float_box_right red_link'>
+        <div class="signed_in_box">|</div>
+        <div class='signed_in_box'>
         	Welcome  <%= link_to current_user.username, user_path(current_user.username) %>
         </div>
   		<% end %>
-  	</div>
+    </div>
+    <div id="content">
+      <%= yield %>
+    </div>
+    <div id="footer">
+      Ruby on Rails power!!
+    </div>
   </div>
-<%= yield %>
-
 </body>
 </html>
