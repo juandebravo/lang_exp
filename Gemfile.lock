@@ -116,7 +116,7 @@ DEPENDENCIES
   bson_ext (~> 1.3)
   compass (>= 0.10.6)
   devise (= 1.4.7)
-  jquery-rails (>= 0.2.6)
+  jquery-rails (>= 1.0.12)
   mongoid (~> 2.1.7)
   rails (= 3.0.10)
   rspec

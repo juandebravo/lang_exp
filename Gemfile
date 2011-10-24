@@ -7,7 +7,7 @@ gem 'bson_ext', '~> 1.3'
 gem 'devise', '1.4.7'
 
 #gem 'cancan'
-gem 'jquery-rails', '>= 0.2.6'
+gem 'jquery-rails', '>= 1.0.12'
 #gem 'passenger'
 #gem 'capistrano'
 gem "compass", ">= 0.10.6"
