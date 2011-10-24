@@ -3,9 +3,18 @@ class WallsController < ApplicationController
   # GET /walls.xml
   def index
     if params.has_key?(:user_id)
-      @wall = current_user.wall
+      u = User.where({:username => params[:user_id]})
+      unless u.empty?
+        @wall = u.first.wall
+      else
+        redirect_to("/home/index", :notice => 'User not found') and return
+      end
     else
-      @wall = Wall.new
+      if user_sign_in?
+        @wall = current_user.wall
+      else
+        redirect_to("/home/index", :notice => 'User not found') and return
+      end
     end
     render :show
   end
