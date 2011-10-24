@@ -1,0 +1,6 @@
+<p id="notice"><%= notice %></p>
+<ul>
+<% @wall.feeds.each do |feed| %>
+<li><%= feed.title %> - <%= feed.description %></li>
+<% end %>
+</ul>
