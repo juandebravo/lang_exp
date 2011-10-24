@@ -15,18 +15,16 @@
     <%= f.label :username %><br />
     <%= f.text_field :username %>
   </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.text_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :profile %><br />
-    <%= f.text_field :profile %>
-  </div>
-  <div class="field">
-    <%= f.label :friends %><br />
-    <%= f.text_field :friends %>
-  </div>
+  <%= f.fields_for :profile do |profile_fields| %>
+    <div class="field">
+      <%= profile_fields.label :name %><br/>
+      <%= profile_fields.text_field :name %>
+    </div>
+    <div class="field">
+      <%= profile_fields.label :surname %><br/>
+      <%= profile_fields.text_field :surname %>
+    </div>
+  <% end %>
   <div class="actions">
     <%= f.submit %>
   </div>
