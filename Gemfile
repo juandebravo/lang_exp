@@ -4,7 +4,7 @@ gem 'rails', '3.0.10'
 
 gem 'mongoid',  '~> 2.1.7'
 gem 'bson_ext', '~> 1.3'
-gem 'devise'
+gem 'devise', '1.4.7'
 
 #gem 'cancan'
 gem 'jquery-rails', '>= 0.2.6'
