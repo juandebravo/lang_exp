@@ -1,11 +1,17 @@
 LangExp::Application.routes.draw do
+  resources :walls
+
+  resources :feeds
+
   get "home/index"
 
   get "home/about"
 
   devise_for :users
 
-  resources :users
+  resources :users do
+    resources :wall, :controller => "walls"
+  end
 
   resources :profiles
 
