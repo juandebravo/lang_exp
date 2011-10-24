@@ -6,8 +6,12 @@ class User
   field :password, :type => String
 
   embeds_one :profile
-  has_many :friends, :class_name => "User"
+
+  has_and_belongs_to_many :friends, :class_name => "User"
+  has_and_belongs_to_many :watchers, :class_name => "User"
+
   has_one :wall
+  
   #has_one :friends_wall
   #embedded_in :user, :inverse_of => :friends
   
@@ -15,14 +19,12 @@ class User
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
-  before_save :initialize_wall
-  before_save :initialize_profile
+  after_create :initialize_relations
 
-  def initialize_wall
-    self.wall ||= Wall.new
+  def initialize_relations
+    self.wall = Wall.new
+    self.profile = Profile.new
+    self.save
   end
-
-  def initialize_profile
-    self.profile ||= Profile.new
-  end
+  
 end

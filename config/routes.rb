@@ -11,6 +11,9 @@ LangExp::Application.routes.draw do
 
   resources :users do
     resources :wall, :controller => "walls"
+    resources :profile, :controller => "profiles"
+    post 'friends/:id', :action => "add_friend", :as => :add_friend
+    delete 'friends/:id', :action => "delete_friend", :as => :delete_friend
   end
 
   resources :profiles

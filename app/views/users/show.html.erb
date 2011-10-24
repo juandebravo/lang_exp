@@ -12,12 +12,19 @@
 
 <p>
   <b>Profile:</b>
-  <%= @user.profile %>
+  <ul>
+    <li><%= "Name : #{@user.profile.name}"%></li>
+    <li><%= "Surname : #{@user.profile.surname}"%></li>
+  </ul>
 </p>
 
 <p>
   <b>Friends:</b>
-  <%= @user.friends %>
+  <ul>
+  <% @user.friends.each do |friend| %>
+    <li> <%="#{friend.username}"%>
+  <%end%>
+  </ul>
 </p>
 
 

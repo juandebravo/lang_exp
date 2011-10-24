@@ -10,11 +10,14 @@
   <%= @profile.surname %>
 </p>
 
-<p>
-  <b>Email:</b>
-  <%= @profile.email %>
-</p>
+<%if user_signed_in?%>
+  <%if current_user.username.eql?(params[:user_id])%>
+    <%= link_to 'Edit', edit_user_profile_path(current_user.username, @profile) %> |
+  <%elsif current_user.friends.select{|friend| friend.username.eql?(@profile.user.username)}.empty?%>
+    <%= link_to 'Add friend', user_add_friend_path(current_user.username, @profile.user.username), :method => 'post' %> |
+  <%else%>
+    <%= link_to 'Delete friend', user_delete_friend_path(current_user.username, @profile.user.username), :method => 'delete'  %> |
+  <%end%>
+<%end%>
 
-
-<%= link_to 'Edit', edit_profile_path(@profile) %> |
 <%= link_to 'Back', profiles_path %>

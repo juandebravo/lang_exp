@@ -13,11 +13,11 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.xml
   def show
-    @user = User.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @user }
+    u = User.where({:username => params[:id]})
+    unless u.empty?
+      @user = u.first
+    else
+      redirect_to("/home/index", :notice => 'User not found') and return
     end
   end
 
@@ -79,5 +79,39 @@ class UsersController < ApplicationController
       format.html { redirect_to(users_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  def add_friend
+    unless current_user.username.eql?(params[:user_id])
+      redirect_to("/home/index", :notice => 'Invalid action') and return
+    end
+    friend = User.where({:username => params[:id]})
+    friend.empty? and redirect_to("/home/index", :notice => 'Unable to add friend. User not found') and return
+    friend = friend.first
+    current_user.friends << friend
+
+    LangExp::Service.create_feed(current_user, {:title => 'New friend', :description => "User #{current_user.username} has added #{friend.username} as friend"})
+
+    redirect_to user_path(current_user.username)
+  end
+  
+  def delete_friend
+    unless current_user.username.eql?(params[:user_id])
+      redirect_to("/home/index", :notice => 'Invalid action') and return
+    end
+    friend = User.where({:username => params[:id]})
+    friend.empty? and redirect_to("/home/index", :notice => 'Unable to add friend. User not found') and return
+
+    friend = friend.first
+    friend_id = friend._id
+    logger.debug "Deleting friend #{friend_id}"
+    logger.debug "Before deleting user has #{current_user.friend_ids.length}"
+    current_user.friend_ids.delete_if{|f| f.eql?(friend_id)}
+    current_user.save
+    logger.debug "After deleting user has #{current_user.friend_ids.length}"
+
+    LangExp::Service.create_feed(current_user, {:title => 'Deleted friend', :description => "User #{current_user.username} does not follow #{friend.username} anymore"})
+    
+    redirect_to user_path(current_user.username)
   end
 end
