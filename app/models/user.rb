@@ -1,3 +1,5 @@
+require 'net/http'
+
 class User
   include Mongoid::Document
   
@@ -35,6 +37,12 @@ class User
   
   def friends_wall
     self.walls.select{|w| w.wall_type.eql?(Wall::WALL_TYPES[:friends])}.first
+  end
+  
+  def github_snippets
+    response = Net::HTTP.get_response "gist.github.com", "/api/v1/json/gists/#{self.username}"
+    decoded = ActiveSupport::JSON.decode response.body
+    decoded["gists"]
   end
 
   def initialize_relations

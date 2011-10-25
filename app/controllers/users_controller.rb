@@ -1,5 +1,3 @@
-require 'net/http'
-
 class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
@@ -129,9 +127,6 @@ class UsersController < ApplicationController
   end
 
   def snippets
-    response = Net::HTTP.get_response "gist.github.com", "/api/v1/json/gists/#{params[:user_id]}"
-    decoded = ActiveSupport::JSON.decode response.body
-    @snippets = decoded["gists"] 
-    logger.error @snippets
+    @snippets = User.where({:username => params[:user_id]}).first.github_snippets
   end
 end
