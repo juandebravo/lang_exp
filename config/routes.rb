@@ -9,6 +9,8 @@ LangExp::Application.routes.draw do
   #end
   
   post "/feeds/:id/comment", :controller => "feeds", :action => "comment", :as => :comment_feed
+  
+  post "/snippet/:id/comment", :controller => "users", :action => "snippet_comment", :as => :comment_snippet
 
   get "home/index"
 

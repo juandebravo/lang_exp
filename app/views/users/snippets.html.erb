@@ -6,5 +6,20 @@
       <b><%= snippet["files"].first %> at: <%= snippet["created_at"]%></b>
     </div>
     <script src="https://gist.github.com/<%=snippet["repo"]%>.js"> </script>
+    <div class="comments">
+      <ul>
+      <% Snippet.where({:github_id => snippet["repo"]}).first.comments_list.each do |comment| %>
+        <li><%= link_to comment.author, user_path(comment.author) %>: <%= comment.text %> (<%=time_ago(comment.created_at)%>)</li> 
+      <% end %>
+
+        <%= form_for :snippet, :url => "/snippet/#{snippet['repo']}/comment" do |f| %>
+           <div class="field">
+             <%= f.hidden_field :user, :value => params[:user_id] %>
+            <%= f.label :text, "Add new comment" %><%= f.text_field :text %>
+            <%= f.submit "Send"%>
+          </div>
+        <% end %>    
+      </ul>
+    </div>
   </div>
 <% end %>

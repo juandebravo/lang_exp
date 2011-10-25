@@ -15,6 +15,7 @@ class User
   has_and_belongs_to_many :watchers, :class_name => "User"
 
   has_many :walls
+  has_many :snippets
   
   #embedded_in :user, :inverse_of => :friends
   

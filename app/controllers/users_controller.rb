@@ -127,6 +127,21 @@ class UsersController < ApplicationController
   end
 
   def snippets
-    @snippets = User.where({:username => params[:user_id]}).first.github_snippets
+    user = User.where({:username => params[:user_id]}).first
+    @snippets = user.github_snippets
+    
+    @snippets.each{|s| 
+      repo = s["repo"]
+      snippet = Snippet.new({:github_id => repo, :user => user})
+      snippet.valid? and snippet.save
+      snippet.valid? or logger.error "Invalid snippet #{snippet.errors}"
+    }
+  end
+  
+  def snippet_comment
+    comment = Comment.new({:author => current_user.username, :text => params[:snippet][:text]})
+    snippet = Snippet.where({:github_id => params[:id]}).first
+    snippet.comments << comment
+    redirect_to(user_snippets_path(params[:snippet][:user]))
   end
 end
