@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <b>Username:</b>
   <%= @user.username %>
@@ -17,6 +15,15 @@
   <b>Friends:</b>
   <ul>
   <% @user.friends.each do |friend| %>
+    <li> <%= link_to friend.username, user_path("#{friend.username}") %>
+  <%end%>
+  </ul>
+</p>
+
+<p>
+  <b>Watchers:</b>
+  <ul>
+  <% @user.watchers.each do |friend| %>
     <li> <%= link_to friend.username, user_path("#{friend.username}") %>
   <%end%>
   </ul>

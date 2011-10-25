@@ -1,5 +1,5 @@
 <ul>
-  <% wall.feeds.each do |feed| %>
+  <% wall.feeds.reverse.each do |feed| %>
   <li class="<%=cycle('odd', 'even')%>">
     <div class="entry_feed"><%= feed.title %> - <%= raw(feed.description) %></div>
     <div class="comments">
@@ -19,3 +19,4 @@
     </div>
   </li>
 <% end %>
+</ul>

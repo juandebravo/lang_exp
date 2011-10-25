@@ -66,8 +66,7 @@ class UsersController < ApplicationController
     @user = User.where({:username => params[:id]}).first
 
     if @user.update_attributes(params[:user])
-      
-      LangExp::Service.create_feed(current_user, {:title => 'Profile changed', :description => 'You changed your profile'})
+      LangExp::Service.update_profile current_user 
       
       redirect_to(user_path(current_user.username), :notice => 'Profile was successfully updated.')
     else
@@ -96,11 +95,11 @@ class UsersController < ApplicationController
     friend.empty? and redirect_to("/home/index", :notice => 'Unable to add friend. User not found') and return
     friend = friend.first
     current_user.friends << friend
+    friend.watchers << current_user
 
-    LangExp::Service.create_feed(current_user, {:title => 'New friend', 
-        :description => "User #{create_link(current_user)} has added #{create_link(friend)} as friend"})
+    LangExp::Service.add_friend(current_user, friend)
 
-    redirect_to user_path(current_user.username)
+    redirect_to user_path(params[:id]), :notice => "User #{params[:id]} added as friend"
   end
   
   def delete_friend
@@ -116,15 +115,15 @@ class UsersController < ApplicationController
     logger.debug "Before deleting user has #{current_user.friend_ids.length}"
     current_user.friend_ids.delete_if{|f| f.eql?(friend_id)}
     current_user.save
+    
+    friend.watcher_ids.delete_if{|f| f.eql?(current_user._id)}
+    friend.save
+
     logger.debug "After deleting user has #{current_user.friend_ids.length}"
 
-    LangExp::Service.create_feed(current_user, {:title => 'Deleted friend', 
-        :description => "User #{create_link(current_user)} does not follow #{create_link(friend)} anymore"})
+    LangExp::Service.delete_friend(current_user, friend)
     
-    redirect_to user_path(current_user.username)
+    redirect_to user_path(params[:id]), :notice => "User #{params[:id]} deleted as friend"
   end
 
-  def create_link user
-   "<a href='#{user_path(user.username)}'>#{user.username}</a>"
-  end
 end
