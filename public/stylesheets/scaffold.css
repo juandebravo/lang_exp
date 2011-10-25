@@ -61,7 +61,7 @@ a, a:visited, a:hover { color: #AAA; text-decoration: none}
 a:hover { text-decoration: underline }
 
 div.field, div.actions {
-  margin-bottom: 10px;
+  margin: 10px;
 }
 
 #notice {
@@ -137,4 +137,22 @@ li.even{
   font-size: 110%;
   margin: 10px;
   padding: 20px;
+}
+
+.image_profile{
+  float: left;
+  margin-right: 35px;
+}
+
+.clear {
+  clear: both;
+}
+
+.image_friend{
+  width: 20px;
+  margin-right: 5px;
+}
+
+label {
+  padding: 0 10px 0 0;
 }

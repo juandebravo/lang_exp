@@ -3,11 +3,6 @@ class User
   
   GENERAL = 'general'
 
-  class << self
-    def general
-      User.where({:username => User::GENERAL}).first
-    end
-  end
   field :username, :type => String
   field :email, :type => String
   field :password, :type => String
@@ -27,6 +22,13 @@ class User
 
   after_create :initialize_relations
   
+  def self.general
+    User.where({:username => User::GENERAL}).first
+  end
+  
+  def image
+    "http://www.gravatar.com/avatar.php?gravatar_id=#{Digest::MD5.hexdigest(email).to_s}"
+  end
   def own_wall
     self.walls.select{|w| w.wall_type.eql?(Wall::WALL_TYPES[:user])}.first
   end

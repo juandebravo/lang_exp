@@ -4,30 +4,35 @@
 </p>
 
 <p>
-  <b>Profile:</b>
+  <b>Profile</b>
+  <div class="image_profile">
+    <%=image_tag @user.image%>
+  </div>
   <ul>
     <li><%= "Name : #{@user.profile.name}"%></li>
     <li><%= "Surname : #{@user.profile.surname}"%></li>
   </ul>
 </p>
 
-<p>
+<div class="clear">
   <b>Friends:</b>
   <ul>
   <% @user.friends.each do |friend| %>
-    <li> <%= link_to friend.username, user_path("#{friend.username}") %>
+    <li> <%=image_tag friend.image, :class=> "image_friend"%><%= link_to friend.username, user_path("#{friend.username}") %></li>
   <%end%>
   </ul>
-</p>
+</div>
 
-<p>
+<div class="clear">
   <b>Watchers:</b>
   <ul>
   <% @user.watchers.each do |friend| %>
-    <li> <%= link_to friend.username, user_path("#{friend.username}") %>
+    <li><%=image_tag friend.image, :class=> "image_friend"%>
+      <%= link_to friend.username, user_path("#{friend.username}") %>
+    </li>
   <%end%>
   </ul>
-</p>
+</div>
 
 <%if user_signed_in?%>
   <%if current_user.username.eql?(params[:id])%>
