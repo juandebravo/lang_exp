@@ -2,6 +2,7 @@
   background-color: #13A;
   color :white;
   min-height: 70px;
+  overflow: hidden;
 }
 
 #header a, a:visited, a:hover { color: #DDD; }
@@ -124,4 +125,16 @@ li.even{
   margin-top: 20px;
   text-align: center;
   padding-bottom: 20px;
+}
+
+#search {
+  clear: right;
+}
+
+.notice {
+  background: none repeat scroll 0 0 #EE8888;
+  border: 1px solid black;
+  font-size: 110%;
+  margin: 10px;
+  padding: 20px;
 }

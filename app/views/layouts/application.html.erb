@@ -20,9 +20,16 @@
         <div class='signed_in_box'>
         	Welcome  <%= link_to current_user.username, user_path(current_user.username) %>
         </div>
+        <div id="search" class="signed_in_box">
+          <input id="search_text" type="text"/>
+          <input type="button" value="search" id="search_button"/>
+        </div>
   		<% end %>
     </div>
     <div id="content">
+      <% if !notice.nil? %>
+				<div class="notice"><%= notice %></div>
+			<% end %>
       <%= yield %>
     </div>
     <div id="footer">
@@ -30,4 +37,9 @@
     </div>
   </div>
 </body>
+<%= javascript_tag do -%>
+  $('#search_button').click(function() {
+    location.href = '/users/' + $('#search_text').val();
+  });
+<% end -%>
 </html>

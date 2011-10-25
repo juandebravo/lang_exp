@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     unless u.empty?
       @user = u.first
     else
-      redirect_to("/home/index", :notice => 'User not found') and return
+      redirect_to("/home/index", :notice => "User #{params[:id]} not found") and return
     end
   end
 
