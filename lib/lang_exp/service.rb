@@ -7,11 +7,14 @@ module LangExp
           f = Feed.new(feed)
         end
         
-        user.wall.feeds << f
+        user.own_wall.feeds << f
         
-        #user.friends.each do |friend|
-        #  friend.wall.feeds << f
+        #user.watchers.each do |watcher|
+        #  watcher.friends_wall.feeds << f
         #end
+        
+        User.where({:username => User::GENERAL}).first.own_wall.feeds << f
+        
       end
     end
   end

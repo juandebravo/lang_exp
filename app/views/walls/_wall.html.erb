@@ -1,0 +1,21 @@
+<ul>
+  <% wall.feeds.each do |feed| %>
+  <li class="<%=cycle('odd', 'even')%>">
+    <div class="entry_feed"><%= feed.title %> - <%= raw(feed.description) %></div>
+    <div class="comments">
+      <ul>
+      <% feed.comments_list.each do |comment| %>
+        <li><%= link_to comment.author, user_path(comment.author) %>: <%= comment.text %> (<%=time_ago(comment.created_at)%>)</li> 
+      <% end %>
+
+        <%= form_for :feed, :url => "/feeds/#{feed._id}/comment" do |f| %>
+           <div class="field">
+             <%= f.hidden_field :wall, :value => wall.user.username %>
+            <%= f.label :text, "Add new comment" %><%= f.text_field :text %>
+            <%= f.submit "Send"%>
+          </div>
+        <% end %>    
+      </ul>
+    </div>
+  </li>
+<% end %>

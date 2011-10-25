@@ -13,6 +13,8 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.xml
   def show
+    params[:id].eql?(User::GENERAL) and redirect_to("/home/index", :notice => "User #{params[:id]} not found") and return
+    
     u = User.where({:username => params[:id]})
     unless u.empty?
       @user = u.first
@@ -61,17 +63,17 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.xml
   def update
-    @user = User.find(params[:id])
+    @user = User.where({:username => params[:id]}).first
 
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.html { redirect_to(@user, :notice => 'User was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-      end
+    if @user.update_attributes(params[:user])
+      
+      LangExp::Service.create_feed(current_user, {:title => 'Profile changed', :description => 'You changed your profile'})
+      
+      redirect_to(user_path(current_user.username), :notice => 'Profile was successfully updated.')
+    else
+      render :action => "edit"
     end
+
   end
 
   # DELETE /users/1

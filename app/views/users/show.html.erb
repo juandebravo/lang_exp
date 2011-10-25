@@ -24,11 +24,11 @@
 
 <%if user_signed_in?%>
   <%if current_user.username.eql?(params[:id])%>
-    <%= link_to 'Edit', edit_user_path(current_user.username) %> |
+    <%= link_to 'Edit', edit_user_path(current_user.username) %>
   <%else%>
     <%= friend_link current_user, @user%>
   <%end%>
 <%end%>
 
-<%= link_to 'Home', root_path %>
-<%= link_to 'Wall', user_wall_index_path(@user.username)%>
+| <%= link_to 'My Feed', user_feed_path(@user.username)%>
+| <%= link_to 'Wall', user_wall_path(@user.username)%>

@@ -1,5 +1,7 @@
 class User
   include Mongoid::Document
+  
+  GENERAL = 'general'
 
   field :username, :type => String
   field :email, :type => String
@@ -10,9 +12,8 @@ class User
   has_and_belongs_to_many :friends, :class_name => "User"
   has_and_belongs_to_many :watchers, :class_name => "User"
 
-  has_one :wall
+  has_many :walls
   
-  #has_one :friends_wall
   #embedded_in :user, :inverse_of => :friends
   
   # Include default devise modules. Others available are:
@@ -20,9 +21,18 @@ class User
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
   after_create :initialize_relations
+  
+  def own_wall
+    self.walls.select{|w| w.wall_type.eql?(Wall::WALL_TYPES[:user])}.first
+  end
+  
+  def friends_wall
+    self.walls.select{|w| w.wall_type.eql?(Wall::WALL_TYPES[:friends])}.first
+  end
 
   def initialize_relations
-    self.wall = Wall.new
+    self.walls = [Wall.new({:wall_type => Wall::WALL_TYPES[:user]}), Wall.new({:wall_type => Wall::WALL_TYPES[:friends]})]
+    #self.friends_wall = Wall.new
     self.profile = Profile.new
     self.save
   end
