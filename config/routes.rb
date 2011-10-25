@@ -20,6 +20,8 @@ LangExp::Application.routes.draw do
     get 'feed', :controller => "walls", :action => "index", :as => :feed
     
     get 'wall', :controller => "walls", :action => "show", :as => :wall
+    
+    get 'snippets'
     #resources :wall, :controller => "walls"
     #member do
     #  get 'wall', :controller => "walls", :action => "index", :as => :user_wall_index

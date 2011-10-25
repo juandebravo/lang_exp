@@ -156,3 +156,11 @@ li.even{
 label {
   padding: 0 10px 0 0;
 }
+
+.snippet_title{
+    background-color: #EAEAEA;
+    color: #666666;
+    font-size: 85%;
+    overflow: hidden;
+    padding: 0.5em;
+}

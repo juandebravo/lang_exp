@@ -1,0 +1,10 @@
+<h1>Your Code Snippets</h1>
+<h3>Brought by GitHub</h3>
+<% @snippets.each do |snippet| %>
+  <div id="snippet">
+    <div class="snippet_title">
+      <b><%= snippet["files"].first %> at: <%= snippet["created_at"]%></b>
+    </div>
+    <script src="https://gist.github.com/<%=snippet["repo"]%>.js"> </script>
+  </div>
+<% end %>
